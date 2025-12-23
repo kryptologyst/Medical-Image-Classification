@@ -1,0 +1,56 @@
+# Vision Transformer configuration for medical image classification
+
+# Model configuration
+model:
+  name: "vit_base_patch16_224"
+  num_classes: 2
+  pretrained: true
+  dropout: 0.1
+  uncertainty: true
+
+# Data configuration
+data:
+  data_dir: "data"
+  batch_size: 16  # Smaller batch size for ViT
+  image_size: [224, 224]
+  num_workers: 4
+  augmentation: true
+  synthetic: true
+
+# Training configuration
+training:
+  epochs: 200
+  early_stopping_patience: 20
+  early_stopping_min_delta: 0.001
+
+# Loss function configuration
+loss:
+  name: "label_smoothing"
+  use_class_weights: false
+  params:
+    smoothing: 0.1
+
+# Optimizer configuration
+optimizer:
+  name: "adamw"
+  lr: 0.0001  # Lower learning rate for ViT
+  weight_decay: 0.05  # Higher weight decay for ViT
+
+# Learning rate scheduler configuration
+scheduler:
+  name: "cosine"
+  T_max: 200
+
+# Logging configuration
+log_level: "INFO"
+checkpoint_dir: "checkpoints/vit"
+log_dir: "logs/vit"
+
+# Class names
+class_names: ["Normal", "Abnormal"]
+
+# Random seed
+seed: 42
+
+# Wandb logging
+use_wandb: false

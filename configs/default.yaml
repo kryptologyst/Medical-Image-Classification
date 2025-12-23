@@ -1,0 +1,57 @@
+# Default configuration for medical image classification
+
+# Model configuration
+model:
+  name: "efficientnet_b0"
+  num_classes: 2
+  pretrained: true
+  dropout: 0.3
+  uncertainty: false
+
+# Data configuration
+data:
+  data_dir: "data"
+  batch_size: 32
+  image_size: [224, 224]
+  num_workers: 4
+  augmentation: true
+  synthetic: true  # Use synthetic data for demo
+
+# Training configuration
+training:
+  epochs: 100
+  early_stopping_patience: 10
+  early_stopping_min_delta: 0.001
+
+# Loss function configuration
+loss:
+  name: "focal"
+  use_class_weights: false
+  params:
+    alpha: 1.0
+    gamma: 2.0
+
+# Optimizer configuration
+optimizer:
+  name: "adamw"
+  lr: 0.001
+  weight_decay: 1e-4
+
+# Learning rate scheduler configuration
+scheduler:
+  name: "cosine"
+  T_max: 100
+
+# Logging configuration
+log_level: "INFO"
+checkpoint_dir: "checkpoints"
+log_dir: "logs"
+
+# Class names
+class_names: ["Normal", "Abnormal"]
+
+# Random seed
+seed: 42
+
+# Wandb logging
+use_wandb: false
